@@ -1,8 +1,9 @@
-﻿using System;
+﻿using BloodTestingApp.Entities;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Windows;
-using BloodTestingApp.Entities;
-using Microsoft.EntityFrameworkCore;
+using System.Windows.Controls;
 
 namespace BloodTestingApp.Pages.Customer
 {
@@ -16,8 +17,69 @@ namespace BloodTestingApp.Pages.Customer
             InitializeComponent();
             _currentUserId = userId;
             LoadAllData();
+            LoadTime();
         }
+        private void LoadTime()
+        {
+            var times = new List<string>();
 
+            for (int h = 7; h <= 17; h++)
+            {
+                times.Add($"{h}:00");
+            }
+
+            cbTime.ItemsSource = times;
+        }
+        private void dpDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (dpDate.SelectedDate == null) return;
+
+            var date = dpDate.SelectedDate.Value;
+
+            // ❌ Chủ nhật
+            if (date.DayOfWeek == DayOfWeek.Sunday)
+            {
+                MessageBox.Show("Không làm việc Chủ Nhật!");
+                dpDate.SelectedDate = null;
+                return;
+            }
+
+            // ❌ quá khứ
+            if (date.Date < DateTime.Today)
+            {
+                MessageBox.Show("Không chọn ngày trong quá khứ!");
+                dpDate.SelectedDate = null;
+                return;
+            }
+
+            // reload giờ theo ngày mới
+            LoadTime();
+        }
+        private void cbTime_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (dpDate.SelectedDate == null || cbTime.SelectedItem == null)
+                return;
+
+            var selectedDate = dpDate.SelectedDate.Value;
+            var hour = int.Parse(cbTime.SelectedItem.ToString().Split(':')[0]);
+
+            // ❌ nếu hôm nay
+            if (selectedDate.Date == DateTime.Today && hour <= DateTime.Now.Hour)
+            {
+                MessageBox.Show("Không chọn giờ trong quá khứ!");
+                cbTime.SelectedItem = null;
+            }
+        }
+        private DateTime? GetSelectedDateTime()
+        {
+            if (dpDate.SelectedDate == null || cbTime.SelectedItem == null)
+                return null;
+
+            var date = dpDate.SelectedDate.Value;
+            var hour = int.Parse(cbTime.SelectedItem.ToString().Split(':')[0]);
+
+            return new DateTime(date.Year, date.Month, date.Day, hour, 0, 0);
+        }
         private void LoadAllData()
         {
             try
@@ -73,7 +135,7 @@ namespace BloodTestingApp.Pages.Customer
                     var newApp = new Appointment
                     {
                         CustomerId = customer.Id,
-                        AppointmentDate = dpDate.SelectedDate.Value,
+                        AppointmentDate = GetSelectedDateTime().Value,
                         Status = "PENDING",
                         Note = txtNote.Text,
                         CreatedAt = DateTime.Now

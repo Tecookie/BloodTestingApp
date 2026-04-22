@@ -94,10 +94,21 @@
                         <TextBlock Text="Đăng Ký Xét Nghiệm" FontSize="22" FontWeight="Bold" Foreground="#2D3748" Margin="0,0,0,20"/>
 
                         <Label Content="Ngày hẹn mong muốn" Foreground="#4A5568" FontWeight="SemiBold" Margin="0,0,0,5"/>
-                        <Viewbox Stretch="Uniform" HorizontalAlignment="Stretch" Height="45" Margin="0,0,0,20">
-                            <DatePicker x:Name="dpDate" Width="300" VerticalContentAlignment="Center"/>
-                        </Viewbox>
+                        <StackPanel>
 
+                            <!-- DATE -->
+                            <Viewbox Stretch="Uniform" Height="45" Margin="0,0,0,10">
+                                <DatePicker x:Name="dpDate"
+                    Width="300"
+                    SelectedDateChanged="dpDate_SelectedDateChanged"/>
+                            </Viewbox>
+
+                            <!-- TIME -->
+                            <ComboBox x:Name="cbTime"
+              Width="150"
+              SelectionChanged="cbTime_SelectionChanged"/>
+
+                        </StackPanel>
                         <Label Content="Lý do hoặc Triệu chứng" Foreground="#4A5568" FontWeight="SemiBold" Margin="0,0,0,5"/>
                         <Border BorderBrush="#E2E8F0" BorderThickness="1" CornerRadius="8" Margin="0,0,0,25">
                             <TextBox x:Name="txtNote" Height="150" TextWrapping="Wrap" Background="Transparent" BorderThickness="0" Padding="10" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
@@ -124,7 +135,7 @@
                         <TextBlock Text="Lịch Sử Yêu Cầu" FontSize="18" FontWeight="Bold" Margin="10,10,0,15" Foreground="#4A5568"/>
                         <DataGrid x:Name="dgAppointments" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" BorderThickness="0" Background="White" RowHeight="50">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Ngày Hẹn" Binding="{Binding AppointmentDate, StringFormat=dd/MM/yyyy}" Width="130">
+                                <DataGridTextColumn Header="Ngày Hẹn" Binding="{Binding AppointmentDate, StringFormat={}{0:dd/MM/yyyy HH:mm} }" Width="130">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="TextBlock">
                                             <Setter Property="VerticalAlignment" Value="Center"/>
