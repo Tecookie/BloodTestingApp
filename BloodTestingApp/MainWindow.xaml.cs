@@ -1,4 +1,5 @@
 ﻿using BloodTestingApp.Entities;
+using BloodTestingApp.Pages;
 using BloodTestingApp.Pages.Admin;
 using BloodTestingApp.Pages.Customer;
 using BloodTestingApp.Pages.Doctor;

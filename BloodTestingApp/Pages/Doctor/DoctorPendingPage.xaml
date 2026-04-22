@@ -9,22 +9,33 @@
       Title="DoctorPendingPage">
 
     <Grid Margin="10">
-        <DataGrid x:Name="dgPending" AutoGenerateColumns="False">
+        <DataGrid x:Name="dgPending"
+          AutoGenerateColumns="False"
+          CanUserAddRows="False">
+
             <DataGrid.Columns>
+
                 <DataGridTextColumn Header="ID" Binding="{Binding AppointmentId}" Width="50"/>
                 <DataGridTextColumn Header="Khách hàng" Binding="{Binding CustomerName}" Width="*"/>
                 <DataGridTextColumn Header="Thời gian" Binding="{Binding AppointmentDate}" Width="150"/>
+                <DataGridTextColumn Header="Trạng thái" Binding="{Binding Status}" Width="100"/>
+                <DataGridTextColumn Header="Bác sĩ nhận" Binding="{Binding AssignedDoctorName}" Width="150"/>
 
-                <DataGridTemplateColumn Header="Action" Width="200">
+                <DataGridTemplateColumn Header="Action" Width="220">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button Content="Accept" 
-                                        Margin="5"
-                                        Click="Accept_Click"/>
-                                <Button Content="Reject" 
-                                        Margin="5"
-                                        Click="Reject_Click"/>
+
+                                <Button Content="Accept"
+                                Margin="5"
+                                Click="Accept_Click"
+                                Loaded="Accept_Loaded"/>
+
+                                <Button Content="Reject"
+                                Margin="5"
+                                Click="Reject_Click"
+                                Loaded="Reject_Loaded"/>
+
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

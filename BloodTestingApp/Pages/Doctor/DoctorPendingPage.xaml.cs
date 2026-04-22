@@ -26,6 +26,8 @@ namespace BloodTestingApp.Pages.Doctor
             public int AppointmentId { get; set; }
             public string CustomerName { get; set; }
             public DateTime AppointmentDate { get; set; }
+            public string Status { get; set; }
+            public string AssignedDoctorName { get; set; }
         }
         private int currentDoctorId = 1; // Simulate logged-in doctor ID
 
@@ -40,16 +42,26 @@ namespace BloodTestingApp.Pages.Doctor
         {
             using (var context = new BloodTestManagementContext())
             {
-                var data = context.AppointmentRequests
-                    .Include(r => r.Appointment)
-                    .ThenInclude(a => a.Customer)
-                    .Where(r => r.DoctorId == currentDoctorId && r.Status == "PENDING")
-                    .Select(r => new PendingAppointment
+                var data = context.Appointments
+                    .Include(a => a.Customer)
+                    .Include(a => a.AssignedDoctor)
+                    .Include(a => a.AppointmentRequests)
+                    //.Where(a =>
+                    //    // doctor này có request
+                    //    a.AppointmentRequests.Any(r => r.DoctorId == currentDoctorId)
+                    //    || a.AssignedDoctorId == currentDoctorId
+                    //)
+                    .Select(a => new PendingAppointment
                     {
-                        AppointmentId = r.Appointment.Id,
-                        CustomerName = r.Appointment.Customer.FullName,
-                        AppointmentDate = r.Appointment.AppointmentDate
+                        AppointmentId = a.Id,
+                        CustomerName = a.Customer.FullName,
+                        AppointmentDate = a.AppointmentDate,
+                        Status = a.Status,
+                        AssignedDoctorName = a.AssignedDoctor != null
+                            ? a.AssignedDoctor.FullName
+                            : "Chưa có"
                     })
+                    .OrderByDescending(a => a.AppointmentDate)
                     .ToList();
 
                 dgPending.ItemsSource = data;
@@ -107,6 +119,25 @@ namespace BloodTestingApp.Pages.Doctor
             MessageBox.Show("Đã nhận lịch!");
             LoadPending();
         }
+        private void Reject_Loaded(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var item = button.DataContext as PendingAppointment;
+
+            if (item == null) return;
+
+            button.IsEnabled = item.Status == "PENDING";
+        }
+        private void Accept_Loaded(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var item = button.DataContext as PendingAppointment;
+
+            if (item == null) return;
+
+            // chỉ cho accept khi PENDING
+            button.IsEnabled = item.Status == "PENDING";
+        }
         private void Reject_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
@@ -132,5 +163,6 @@ namespace BloodTestingApp.Pages.Doctor
             MessageBox.Show("Đã từ chối!");
             LoadPending();
         }
+
     }
 }
