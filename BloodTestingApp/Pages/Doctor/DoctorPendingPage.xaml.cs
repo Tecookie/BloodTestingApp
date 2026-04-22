@@ -29,9 +29,10 @@ namespace BloodTestingApp.Pages.Doctor
         }
         private int currentDoctorId = 1; // Simulate logged-in doctor ID
 
-        public DoctorPendingPage()
+        public DoctorPendingPage(int doctorId)
         {
             InitializeComponent();
+            currentDoctorId = doctorId;
             LoadPending();
         }
 

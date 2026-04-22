@@ -32,9 +32,10 @@ namespace BloodTestingApp.Pages.Doctor
             public string ResultText { get; set; }
             public string Diseases { get; set; } // nối chuỗi
         }
-        public DoctorHistoryPage()
+        public DoctorHistoryPage(int doctorId)
         {
             InitializeComponent();
+            currentDoctorId = doctorId;
             LoadHistory();
         }
         public void LoadHistory()

@@ -50,7 +50,10 @@ namespace BloodTestingApp
                         else if (role == "DOCTOR")
                         {
                             // Mở trang dành cho Bác sĩ
-                            DoctorMainWindow doctorWindow = new DoctorMainWindow();
+                            var doctor = context.Doctors
+                            .FirstOrDefault(d => d.UserId == user.Id);
+
+                            DoctorMainWindow doctorWindow = new DoctorMainWindow(doctor.Id);
                             doctorWindow.Show();
                             this.Close();
                         }

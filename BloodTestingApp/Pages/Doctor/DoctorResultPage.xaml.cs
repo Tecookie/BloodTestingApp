@@ -29,9 +29,10 @@ namespace BloodTestingApp.Pages.Doctor
         }
         public int? SelectedAppointmentId { get; set; }
         private int currentDoctorId = 1; // Simulate logged-in doctor ID
-        public DoctorResultPage()
+        public DoctorResultPage(int doctorId)
         {
             InitializeComponent();
+            currentDoctorId = doctorId;
             LoadAppointments();
             LoadDiseases();
         }

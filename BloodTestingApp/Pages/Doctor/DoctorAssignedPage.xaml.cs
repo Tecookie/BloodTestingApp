@@ -29,9 +29,10 @@ namespace BloodTestingApp.Pages.Doctor
             public string CustomerName { get; set; }
             public DateTime AppointmentDate { get; set; }
         }
-        public DoctorAssignedPage()
+        public DoctorAssignedPage(int doctorId)
         {
             InitializeComponent();
+            currentDoctorId = doctorId;
             LoadAssigned();
         }
 
@@ -63,7 +64,7 @@ namespace BloodTestingApp.Pages.Doctor
             if (item == null) return;
 
             // chuyển sang ResultPage
-            var resultPage = new DoctorResultPage();
+            var resultPage = new DoctorResultPage(currentDoctorId);
 
             resultPage.SelectedAppointmentId = item.AppointmentId;
 

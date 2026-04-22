@@ -19,28 +19,31 @@ namespace BloodTestingApp.Pages.Doctor
     /// </summary>
     public partial class DoctorMainWindow : Window
     {
-        public DoctorMainWindow()
+        private int currentDoctorId;
+        public DoctorMainWindow(int doctorId)
         {
             InitializeComponent();
+            currentDoctorId = doctorId;
+            MainFrame.Navigate(new DoctorPendingPage(currentDoctorId));
         }
         private void Pending_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new DoctorPendingPage());
+            MainFrame.Navigate(new DoctorPendingPage(currentDoctorId));
         }
 
         private void Assigned_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new DoctorAssignedPage());
+            MainFrame.Navigate(new DoctorAssignedPage(currentDoctorId));
         }
 
         private void Result_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new DoctorResultPage());
+            MainFrame.Navigate(new DoctorResultPage(currentDoctorId));
         }
 
         private void History_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new DoctorHistoryPage());
+            MainFrame.Navigate(new DoctorHistoryPage(currentDoctorId));
         }
     }
 }
