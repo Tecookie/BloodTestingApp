@@ -1,0 +1,33 @@
+﻿<Page x:Class="BloodTestingApp.Pages.Doctor.DoctorResultPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BloodTestingApp.Pages.Doctor"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="DoctorResultPage">
+
+    <StackPanel Margin="20">
+
+        <TextBlock Text="Chọn lịch:"/>
+        <ComboBox x:Name="cbAppointments"
+          Width="300"
+          DisplayMemberPath="DisplayText"/>
+        <TextBlock Text="Kết quả:" Margin="0,10,0,0"/>
+        <TextBox x:Name="txtResult" 
+                 Height="100" 
+                 AcceptsReturn="True"/>
+
+        <TextBlock Text="Chọn bệnh:" Margin="0,10,0,0"/>
+        <ListBox x:Name="lbDiseases"
+         SelectionMode="Multiple"
+         Height="120"
+         DisplayMemberPath="Name"/>
+        <Button Content="Lưu kết quả"
+                Margin="0,10,0,0"
+                Width="150"
+                Click="Save_Click"/>
+
+    </StackPanel>
+</Page>
