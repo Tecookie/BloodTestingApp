@@ -1,9 +1,10 @@
-﻿using System;
+﻿using BloodTestingApp.Entities;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using BloodTestingApp.Entities;
-using Microsoft.EntityFrameworkCore;
+using System.Windows.Input;
 
 namespace BloodTestingApp.Pages.Admin
 {
@@ -21,11 +22,19 @@ namespace BloodTestingApp.Pages.Admin
         {
             try
             {
-                dgUsers.ItemsSource = _context.Users
+                var users = _context.Users
                     .Include(u => u.Customer)
                     .Include(u => u.Doctor)
                     .AsNoTracking()
                     .ToList();
+
+                dgUsers.ItemsSource = users;
+
+                // Cập nhật stat cards
+                txbAdminCount.Text = users.Count(u => u.Role == "ADMIN").ToString();
+                txbDoctorCount.Text = users.Count(u => u.Role == "DOCTOR").ToString();
+                txbCustomerCount.Text = users.Count(u => u.Role == "CUSTOMER").ToString();
+                txbTotalCount.Text = users.Count.ToString();
             }
             catch (Exception ex)
             {
@@ -140,7 +149,9 @@ namespace BloodTestingApp.Pages.Admin
                 }
             }
         }
-
+        private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => DragMove();
+        private void btnClose_Click(object sender, RoutedEventArgs e) => Close();
+        private void btnMinimize_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             if (dgUsers.SelectedItem is User selected)
@@ -207,7 +218,7 @@ namespace BloodTestingApp.Pages.Admin
             if (cbRole.SelectedItem is ComboBoxItem item)
             {
                 string r = item.Content.ToString();
-                lblSubInfo.Content = r == "DOCTOR" ? "Chuyên khoa:" : (r == "CUSTOMER" ? "Số điện thoại:" : "Thông tin thêm:");
+                lblSubInfo.Text = r == "DOCTOR" ? "CHUYÊN KHOA" : (r == "CUSTOMER" ? "SỐ ĐIỆN THOẠI" : "THÔNG TIN THÊM");
             }
         }
 

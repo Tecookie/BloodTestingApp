@@ -4,6 +4,7 @@ using BloodTestingApp.Pages.Doctor;
 using System;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 // Thêm namespace chứa DoctorMainWindow nếu nó nằm ở thư mục khác
 // using BloodTestingApp.Pages.Doctor; 
 
@@ -15,7 +16,9 @@ namespace BloodTestingApp
         {
             InitializeComponent();
         }
-
+        private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => DragMove();
+        private void btnClose_Click(object sender, RoutedEventArgs e) => Close();
+        private void btnMinimize_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             string username = txtUsername.Text.Trim();
