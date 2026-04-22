@@ -41,7 +41,13 @@ namespace BloodTestingApp.Pages.Admin
                 MessageBox.Show("Lỗi tải dữ liệu: " + ex.Message);
             }
         }
+        private void Logout_Click(object sender, RoutedEventArgs e)
+        {
+            var login = new MainWindow();
+            login.Show();
 
+            this.Close();
+        }
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             try

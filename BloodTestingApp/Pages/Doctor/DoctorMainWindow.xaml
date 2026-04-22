@@ -15,7 +15,10 @@
                        Foreground="White" 
                        FontSize="18" 
                        Margin="10"/>
-
+            <Button Content="Logout"
+        Width="100"
+        Height="35"
+        Click="Logout_Click"/>
             <Button Content="📥 Lịch chờ"
                     Margin="10"
                     Click="Pending_Click"/>

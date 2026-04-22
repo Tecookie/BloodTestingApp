@@ -36,6 +36,12 @@
                     <TextBlock Text="👤  Hồ Sơ Cá Nhân" Foreground="White" FontSize="14" Cursor="Hand"/>
                     <TextBlock Text="📅  Đặt Lịch Hẹn" Foreground="White" FontSize="14" Cursor="Hand"/>
                     <TextBlock Text="📄  Kết Quả Xét Nghiệm" Foreground="White" FontSize="14" Cursor="Hand"/>
+                    <Button Content="Logout"
+        Width="100"
+        Height="35"
+        HorizontalAlignment="Right"
+        Margin="0,10,10,0"
+        Click="Logout_Click"/>
                 </ListBox>
             </StackPanel>
         </Border>

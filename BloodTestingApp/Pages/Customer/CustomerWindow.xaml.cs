@@ -80,6 +80,13 @@ namespace BloodTestingApp.Pages.Customer
 
             return new DateTime(date.Year, date.Month, date.Day, hour, 0, 0);
         }
+        private void Logout_Click(object sender, RoutedEventArgs e)
+        {
+            var login = new MainWindow();
+            login.Show();
+
+            this.Close();
+        }
         private void LoadAllData()
         {
             try

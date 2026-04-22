@@ -45,5 +45,12 @@ namespace BloodTestingApp.Pages.Doctor
         {
             MainFrame.Navigate(new DoctorHistoryPage(currentDoctorId));
         }
+        private void Logout_Click(object sender, RoutedEventArgs e)
+        {
+            var login = new MainWindow();
+            login.Show();
+
+            this.Close();
+        }
     }
 }
