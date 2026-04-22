@@ -1,5 +1,6 @@
 ﻿using BloodTestingApp.Entities;
 using BloodTestingApp.Pages.Admin;
+using BloodTestingApp.Pages.Customer;
 using BloodTestingApp.Pages.Doctor;
 using System;
 using System.Linq;
@@ -60,10 +61,12 @@ namespace BloodTestingApp
                             doctorWindow.Show();
                             this.Close();
                         }
-                        else
+                        else if (role == "CUSTOMER")
                         {
-                            txtMessage.Text = "Tài khoản của bạn không có quyền truy cập khu vực này!";
-                            txtMessage.Foreground = System.Windows.Media.Brushes.Red;
+                            // Truyền ID của thằng vừa đăng nhập vào Window mới
+                            CustomerWindow customerWindow = new CustomerWindow(user.Id);
+                            customerWindow.Show();
+                            this.Close();
                         }
                     }
                     else

@@ -73,7 +73,7 @@ namespace BloodTestingApp.Pages.Admin
 
                 if (role == "CUSTOMER")
                 {
-                    newUser.Customer = new Customer { FullName = txtFullName.Text, Phone = txtSubInfo.Text };
+                    newUser.Customer = new Entities.Customer { FullName = txtFullName.Text, Phone = txtSubInfo.Text };
                 }
                 else if (role == "DOCTOR")
                 {
@@ -127,7 +127,7 @@ namespace BloodTestingApp.Pages.Admin
 
                         if (role == "CUSTOMER")
                         {
-                            if (userInDb.Customer == null) userInDb.Customer = new Customer();
+                            if (userInDb.Customer == null) userInDb.Customer = new Entities.Customer();
                             userInDb.Customer.FullName = txtFullName.Text;
                             userInDb.Customer.Phone = txtSubInfo.Text;
                         }

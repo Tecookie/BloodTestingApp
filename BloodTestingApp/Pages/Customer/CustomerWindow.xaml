@@ -1,0 +1,244 @@
+﻿<Window x:Class="BloodTestingApp.Pages.Customer.CustomerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Hệ Thống Quản Lý Xét Nghiệm" Height="750" Width="1200" 
+        WindowStartupLocation="CenterScreen" Background="#F5F7FA">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" Background="#1A202C" Padding="20">
+            <StackPanel>
+                <Ellipse Width="80" Height="80" Fill="#4A5568" Margin="0,10,0,15"/>
+                <TextBlock Text="KHÁCH HÀNG" Foreground="White" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Margin="0,0,0,40"/>
+
+                <ListBox x:Name="menuList" Background="Transparent" BorderThickness="0" SelectedIndex="0">
+                    <ListBox.Resources>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListBoxItem">
+                                        <Border x:Name="Border" Background="Transparent" CornerRadius="10" Margin="0,5" Padding="15,15">
+                                            <ContentPresenter />
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter TargetName="Border" Property="Background" Value="#3182CE"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.Resources>
+                    <TextBlock Text="👤  Hồ Sơ Cá Nhân" Foreground="White" FontSize="14" Cursor="Hand"/>
+                    <TextBlock Text="📅  Đặt Lịch Hẹn" Foreground="White" FontSize="14" Cursor="Hand"/>
+                    <TextBlock Text="📄  Kết Quả Xét Nghiệm" Foreground="White" FontSize="14" Cursor="Hand"/>
+                </ListBox>
+            </StackPanel>
+        </Border>
+
+        <Grid Grid.Column="1" Margin="30">
+
+            <Border x:Name="sectionProfile" Background="White" CornerRadius="20" Padding="40">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelectedIndex, ElementName=menuList}" Value="0">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <StackPanel MaxWidth="600" HorizontalAlignment="Left">
+                    <TextBlock Text="Thông Tin Cá Nhân" FontSize="26" FontWeight="Bold" Foreground="#2D3748" Margin="0,0,0,30"/>
+
+                    <Label Content="Họ và Tên" Foreground="#718096" Margin="0,0,0,5"/>
+                    <Border BorderBrush="#E2E8F0" BorderThickness="1" CornerRadius="8" Background="#F7FAFC" Margin="0,0,0,20">
+                        <TextBox x:Name="txtFullName" IsReadOnly="True" Background="Transparent" BorderThickness="0" Padding="12"/>
+                    </Border>
+
+                    <Label Content="Số điện thoại" Foreground="#718096" Margin="0,0,0,5"/>
+                    <Border BorderBrush="#E2E8F0" BorderThickness="1" CornerRadius="8" Background="#F7FAFC" Margin="0,0,0,20">
+                        <TextBox x:Name="txtPhone" IsReadOnly="True" Background="Transparent" BorderThickness="0" Padding="12"/>
+                    </Border>
+
+                    <Label Content="Địa chỉ" Foreground="#718096" Margin="0,0,0,5"/>
+                    <Border BorderBrush="#E2E8F0" BorderThickness="1" CornerRadius="8" Background="#F7FAFC" Margin="0,0,0,20">
+                        <TextBox x:Name="txtAddress" IsReadOnly="True" Background="Transparent" BorderThickness="0" Padding="12" Height="100" TextWrapping="Wrap"/>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <Grid x:Name="sectionBooking">
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelectedIndex, ElementName=menuList}" Value="1">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="380"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Background="White" CornerRadius="20" Padding="25" Margin="0,0,25,0">
+                    <StackPanel>
+                        <TextBlock Text="Đăng Ký Xét Nghiệm" FontSize="22" FontWeight="Bold" Foreground="#2D3748" Margin="0,0,0,20"/>
+
+                        <Label Content="Ngày hẹn mong muốn" Foreground="#4A5568" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                        <Viewbox Stretch="Uniform" HorizontalAlignment="Stretch" Height="45" Margin="0,0,0,20">
+                            <DatePicker x:Name="dpDate" Width="300" VerticalContentAlignment="Center"/>
+                        </Viewbox>
+
+                        <Label Content="Lý do hoặc Triệu chứng" Foreground="#4A5568" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                        <Border BorderBrush="#E2E8F0" BorderThickness="1" CornerRadius="8" Margin="0,0,0,25">
+                            <TextBox x:Name="txtNote" Height="150" TextWrapping="Wrap" Background="Transparent" BorderThickness="0" Padding="10" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
+                        </Border>
+
+                        <Button Content="XÁC NHẬN ĐẶT LỊCH" Click="btnBook_Click" Cursor="Hand" Background="#3182CE" Foreground="White" Height="50" FontSize="14" FontWeight="Bold">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}" CornerRadius="10">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="1" Background="White" CornerRadius="20" Padding="15">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Lịch Sử Yêu Cầu" FontSize="18" FontWeight="Bold" Margin="10,10,0,15" Foreground="#4A5568"/>
+                        <DataGrid x:Name="dgAppointments" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" BorderThickness="0" Background="White" RowHeight="50">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Ngày Hẹn" Binding="{Binding AppointmentDate, StringFormat=dd/MM/yyyy}" Width="130">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="VerticalAlignment" Value="Center"/>
+                                            <Setter Property="Margin" Value="15,0,0,0"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Trạng Thái" Binding="{Binding Status}" Width="120">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="VerticalAlignment" Value="Center"/>
+                                            <Setter Property="FontWeight" Value="SemiBold"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Ghi Chú" Binding="{Binding Note}" Width="*">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="VerticalAlignment" Value="Center"/>
+                                            <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                                            <Setter Property="Margin" Value="5,0,0,0"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <Border x:Name="sectionResults" Background="White" CornerRadius="20" Padding="20">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelectedIndex, ElementName=menuList}" Value="2">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="Kết Quả Chi Tiết" FontSize="22" FontWeight="Bold" Margin="10,10,0,20" Foreground="#2D3748"/>
+
+                    <DataGrid x:Name="dgResults" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" BorderThickness="0" Background="White" RowHeight="60" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#EDF2F7">
+                        <DataGrid.ColumnHeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Height" Value="45"/>
+                                <Setter Property="Padding" Value="15,0,0,0"/>
+                                <Setter Property="Background" Value="#F7FAFC"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                            </Style>
+                        </DataGrid.ColumnHeaderStyle>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Ngày XN" Binding="{Binding CreatedAt, StringFormat=dd/MM/yyyy}" Width="150">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="Margin" Value="15,0,0,0"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Bác sĩ" Binding="{Binding Doctor.FullName}" Width="220">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTemplateColumn Header="Chẩn đoán sơ bộ" Width="*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding ResultText}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Padding="5,0,15,0"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+
+                        <DataGrid.RowDetailsTemplate>
+                            <DataTemplate>
+                                <Border Background="#F8FAFC" Padding="25" BorderBrush="#E2E8F0" BorderThickness="0,1,0,0">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="1.2*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0" Margin="0,0,40,0">
+                                            <TextBlock Text="NỘI DUNG CHI TIẾT" FontWeight="Bold" Foreground="#64748B" Margin="0,0,0,12" FontSize="12"/>
+                                            <TextBlock Text="{Binding ResultText}" TextWrapping="Wrap" FontSize="15" LineHeight="24" Foreground="#1E293B"/>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1">
+                                            <TextBlock Text="BỆNH LÝ PHÁT HIỆN" FontWeight="Bold" Foreground="#EF4444" Margin="0,0,0,12" FontSize="12"/>
+                                            <ItemsControl ItemsSource="{Binding ResultDiseases}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Border Background="White" BorderBrush="#FEE2E2" BorderThickness="1" Margin="0,3" Padding="12,10" CornerRadius="8">
+                                                            <TextBlock Text="{Binding Disease.Name}" FontWeight="Bold" Foreground="#B91C1C"/>
+                                                        </Border>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </DataGrid.RowDetailsTemplate>
+                    </DataGrid>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>
